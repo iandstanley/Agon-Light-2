@@ -1,0 +1,134 @@
+   10 mode 0
+   20 dim start$(4), money$(4), phone$(5), work$(3), sleep$(3), drugs$(3)
+   30 gameover% = 0 days% = 1 health% = 100 money% = 50
+   40 proc_init
+   50 cls
+   60 input "what is your name?: " a$
+   70 print a$ + " " +start$(rnd(4))
+   80 wait 500
+   90 repeat
+  100   cls
+  110   print
+  120   if health% <= 0 then proc_bad : end
+  130   print "status :: days on the streets: " + str$(days%) + " health: " + str$(health%) + " money: " + str$(money%)
+  140   print "press key 1 for begging for food and money"
+  150   print "press key 2 for calling someone"
+  160   print "press key 3 for trying to find a job"
+  170   print "press key 4 for finding shelter for the night"
+  180   print "press key 5 for buying drugs or alcohol to forget your troubles"
+  190   print
+  200   print "what will you choose?: "
+  210   c$ = get$
+  220   print
+  230   if val(c$) < 1 or val(c$) > 5 then print "invalid input!"
+  240   if c$ = "1" then
+  250     r1% = rnd(4)
+  260     print money$(r1%)
+  270     health% += 30
+  280     money% += 40
+  290   endif
+  300   if c$ = "2" then
+  310     r2% = rnd(5)
+  320     print phone$(r2%)
+  330     if r2% = 5 then
+  340       proc_good
+  350     endif
+  360   endif
+  370   if c$ = "3" then
+  380     if health% < 30 then
+  390       print "you are not enough healthy to get a job!"
+  400       goto 630
+  410     endif
+  420     r3% = rnd(3)
+  430     print work$(r3%)
+  440     if r3% = 3 then
+  450       proc_good
+  460     endif
+  470   endif
+  480   if c$ = "4" then
+  490     print sleep$(rnd(3))
+  500     health% += 40
+  510   endif
+  520   if c$ = "5" then
+  530     if money% < 25 then
+  540       print "you don't have enough money to but drugs/alcohol!"
+  550       goto 630
+  560     endif
+  570     r5% = rnd(3)
+  580     print drugs$(r5%)
+  590     if r5% = 3 then
+  600       proc_bad
+  610     endif
+  620   endif
+  630   
+  640   wait 500
+  650   days% += 1
+  660   health% -= 10
+  670   money% -= 5
+  680 until gameover% = -1
+  690 end
+  700
+  710 data "you are a runaway teen that ran from home"
+  720 data "you are a middle-aged man who left home after your wife failed a divorce"
+  730 data "you are man who is struggling with mental illness"
+  740 data "you got fired from work and got avicted from your apartment"
+  750
+  760 data "you try to find food and beg for money but in vain"
+  770 data "a kind woman gives you some money"
+  780 data "you find some food"
+  790 data "people give you some money to hang on"
+  800
+  810 data "you call home but no one answers"
+  820 data "you call your grandma and tell her about yourself and you both cry she promises to send some money"
+  830 data "you call your friend and she picks you up and you get to stay with at her place for a week"
+  840 data "you call a help line but they can't help you"
+  850 data "you call your parents and they pick you up - you are safe from the streets"
+  860
+  870 data "you try to find work but nobody is interested"
+  880 data "you find a job but get layed off really quick"
+  890 data "you find a good job - after two weeks you can affored housing!"
+  900
+  910 data "you find a safe place for the night under a bridge"
+  920 data "you go to the local shelter and when you wake up all your belongings have been stolened"
+  930 data "you rent a room at a motel for the weekend - you take a shower wash your clouths shave eat well and rest in a warm bed"
+  940
+  950 data "you buy some cheap alcohol and get drunk and pass out on the side walk"
+  960 data "you buy some cheap drug and smoke it and OD you wake up in the hospital"
+  970 data "you buy some buzz and drugs you get OD and you die on the streets - RIP"
+  980
+  990 def proc_init
+1000 for i% = 1 to 4
+1010   read start$(i%)
+1020 next i%
+1030 for i% = 1 to 4
+1040   read money$(i%)
+1050 next i%
+1060 for i% = 1 to 5
+1070   read phone$(i%)
+1080 next i%
+1090 for i% = 1 to 3
+1100   read work$(i%)
+1110 next i%
+1120 for i% = 1 to 3
+1130   read sleep$(i%)
+1140 next i%
+1150 for i% = 1 to 3
+1160   read drugs$(i%)
+1170 next i%
+1180
+1190 endproc
+1200
+1210
+1220 def proc_good
+1230 gameover% = -1
+1240 print
+1250 print "you are safe you survived the streets!"
+1260 print "you were: " + str$(days%) + " days homeless"
+1270 endproc
+1280
+1290 def proc_bad
+1300 gameover% = -1
+1310 print
+1320 print "you died on the street! game over!"
+1330 print "you lasted: " + str$(days%) + " days on the streets"
+1340 endproc
